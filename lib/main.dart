@@ -1,4 +1,7 @@
 import 'package:brandshop/dashboard/dashboard_screen.dart';
+import 'package:brandshop/home/bindings/product_binding.dart';
+import 'package:brandshop/routes/routes.dart';
+import 'package:brandshop/splash/views/splash_screen.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,12 +17,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      initialBinding: ProductBinding(),
+      getPages: getPage,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: DashBoardScreen(),
+      home: SplashView(),
     );
   }
 }

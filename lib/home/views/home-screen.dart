@@ -1,5 +1,9 @@
+import 'package:brandshop/home/controller/products-controller.dart';
+import 'package:brandshop/home/model/products.dart';
 import 'package:brandshop/utils/text-widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,68 +13,288 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Get.find<ProductController>().getDataItem();
+    Get.find<ProductController>().getDataItem2();
+    super.initState();
+  }
+
   final TextEditingController controller = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 50,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset(
-              "assets/images/logo.png",
-              height: 100,
-            ),
-          ),
-          Center(
-            child: Container(
-              width: MediaQuery.sizeOf(context).width - 30,
-              child: TextFormField(
-                controller: controller,
-                // validator: (value) {
-                //   if (value!.isEmpty || value.length < 10) {
-                //     return 'Phone invalidate';
-                //   }
-                //   return null;
-                // },
-                decoration: InputDecoration(
-                  hintText: "Search",
-                  labelStyle: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.3122410774),
-                    borderSide: const BorderSide(
-                      color: Color(0xffc0c0c0),
-                    ),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.3122410774),
-                    borderSide: const BorderSide(
-                      color: Color(0xffc0c0c0),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.3122410774),
-                    borderSide: const BorderSide(color: Colors.black),
-                  ),
-                  disabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(5.3122410774),
-                    borderSide: const BorderSide(
-                      color: Color(0xffc0c0c0),
-                    ),
-                  ),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+    return GetBuilder<ProductController>(
+      builder: (productController) => SafeArea(
+        child: Scaffold(
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 50,
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    width: MediaQuery.sizeOf(context).width / 2,
+                  ),
+                ),
+                Center(
+                  child: Container(
+                    width: MediaQuery.sizeOf(context).width - 30,
+                    child: TextFormField(
+                      controller: controller,
+                      decoration: InputDecoration(
+                        hintText: "Search",
+                        labelStyle: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.3122410774),
+                          borderSide: const BorderSide(
+                            color: Color(0xffc0c0c0),
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.3122410774),
+                          borderSide: const BorderSide(
+                            color: Color(0xffc0c0c0),
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.3122410774),
+                          borderSide: const BorderSide(color: Colors.black),
+                        ),
+                        disabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5.3122410774),
+                          borderSide: const BorderSide(
+                            color: Color(0xffc0c0c0),
+                          ),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 6),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextWidget(
+                    text: "Catergories",
+                    size: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                productController.category.isNotEmpty
+                    ? SizedBox(
+                        width: double.infinity,
+                        height: 150,
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: productController.category.length,
+                            itemBuilder: (BuildContext context, index) {
+                              return InkWell(
+                                onTap: () {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(),
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.network(
+                                          productController.category[index]
+                                                  .categoryImage ??
+                                              "",
+                                          width: 100,
+                                          height: 100,
+                                          fit: BoxFit.contain,
+                                        ),
+                                        TextWidget(
+                                            text: productController
+                                                    .category[index]
+                                                    .categoryName ??
+                                                "",
+                                            size: 20),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }),
+                      )
+                    : Text(""),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextWidget(
+                    text: "Popular Item",
+                    size: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                productController.item.isNotEmpty
+                    ? StaggeredGridView.countBuilder(
+                        crossAxisSpacing: 2,
+                        mainAxisSpacing: 2,
+                        itemCount: 10,
+                        crossAxisCount: 2,
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        staggeredTileBuilder: (int index) =>
+                            const StaggeredTile.fit(1),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              height: 300,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all()),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    SizedBox(
+                                      height: 140,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(16),
+                                          topRight: Radius.circular(16),
+                                        ),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                                image: NetworkImage(
+                                                    productController
+                                                        .item2[index].image!),
+                                                fit: BoxFit.contain),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              left: 8,
+                                              right: 8,
+                                              top: 6,
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                        productController
+                                                            .item2[index]
+                                                            .title!,
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 8,
+                                                ),
+                                                Text(
+                                                  productController.item2[index]
+                                                      .description!,
+                                                  style: TextStyle(
+                                                    fontFamily: 'Rubik',
+                                                    fontWeight: FontWeight.w400,
+                                                    fontSize: 13,
+                                                    height: 1.4,
+                                                  ),
+                                                  maxLines: 2,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                                SizedBox(
+                                                  height: 10,
+                                                ),
+                                                InkWell(
+                                                  onTap: () {},
+                                                  child: Container(
+                                                      height: 40,
+                                                      width: 60,
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(16),
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          113,
+                                                          113,
+                                                          114,
+                                                        ),
+                                                      ),
+                                                      child: Icon(
+                                                        Icons.shopping_cart,
+                                                        color: Colors.white,
+                                                      )),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      )
+                    // ? Padding(
+                    //     padding: const EdgeInsets.all(8.0),
+                    //     child: SizedBox(
+                    //       height: 400,
+                    //       child: GridView.builder(
+                    //           gridDelegate:
+                    //               const SliverGridDelegateWithMaxCrossAxisExtent(
+                    //                   maxCrossAxisExtent: 200,
+                    //                   childAspectRatio: 1,
+                    //                   crossAxisSpacing: 10,
+                    //                   mainAxisSpacing: 10),
+                    //           itemCount: productController.item.length,
+                    //           itemBuilder: (BuildContext ctx, index) {
+                    //             return Container(
+                    //               alignment: Alignment.center,
+                    //               decoration: BoxDecoration(
+                    //                   color: const Color.fromARGB(
+                    //                       255, 114, 114, 114),
+                    //                   borderRadius: BorderRadius.circular(15)),
+                    //               child: Text(
+                    //                   productController.item[index].productName ??
+                    //                       ""),
+                    //             );
+                    //           }),
+                    //     ),
+                    //   )
+                    : Text("OK"),
+              ],
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }

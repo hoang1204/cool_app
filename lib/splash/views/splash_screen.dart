@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:brandshop/auth/views/login-screens.dart';
+import 'package:brandshop/dashboard/dashboard_screen.dart';
+import 'package:brandshop/home/controller/products-controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,10 +17,11 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     //for foreground state
+
     Timer(
-      const Duration(seconds: 2),
+      const Duration(seconds: 3),
       () {
-        Get.offAll(() => const LoginScreen());
+        Get.offAll(() => DashBoardScreen());
       },
     );
     super.initState();
