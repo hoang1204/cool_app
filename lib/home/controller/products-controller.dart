@@ -1,8 +1,10 @@
+import 'dart:io';
+
 import 'package:brandshop/api/api-define.dart';
 import 'package:brandshop/home/model/categories.dart';
 import 'package:brandshop/home/model/product.dart';
 import 'package:brandshop/home/model/products.dart';
-
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,21 +13,17 @@ class ProductController extends GetxController {
   List<Products> item2 = [];
   List<Categories> category = [
     Categories(
-        categoryName: "Bag",
-        categoryImage:
-            "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+      categoryName: "Bag",
+    ),
     Categories(
-        categoryName: "Tee",
-        categoryImage:
-            "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"),
+      categoryName: "Tee",
+    ),
     Categories(
-        categoryName: "Jacket",
-        categoryImage:
-            "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"),
+      categoryName: "Jacket",
+    ),
     Categories(
-        categoryName: "Item",
-        categoryImage:
-            "https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"),
+      categoryName: "Item",
+    ),
   ];
   @override
   void onInit() {
@@ -63,7 +61,13 @@ class ProductController extends GetxController {
           );
       if (response.statusCode == 200) {
         print("Thanh cong");
+        final encoding = response.headers['content-encoding'];
 
+        // Giải mã dữ liệu dựa trên encoding
+        final decodedData = encoding == 'gzip'
+            ? utf8.decode(gzip.decode(response.bodyBytes))
+            : utf8.decode(response.bodyBytes);
+        print(decodedData);
         item2 = ProducstFromJson(response.body);
         print(item2[1].image);
         return item2;
