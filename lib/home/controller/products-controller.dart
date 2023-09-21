@@ -62,13 +62,12 @@ class ProductController extends GetxController {
           'Accept': 'application/json; charset=utf-8',
         },
       );
+
       if (response.statusCode == 200) {
-        print("Thành công");
-        final decodedData = utf8.decode(response.bodyBytes);
-        // final decodedData = response.body;
-        print(decodedData);
-        item = ProductsFromJson(decodedData);
-        print(item[1].productImage);
+        print("Thanh cong");
+        item = ProductsFromJson(response.body);
+        // item = ProducstFromJson(response.body);
+
         return item;
       } else {
         print(response.statusCode);
