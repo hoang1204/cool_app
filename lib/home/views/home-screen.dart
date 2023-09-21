@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    Get.find<ProductController>().getDataItem();
+    // Get.find<ProductController>().getDataItem();
     Get.find<ProductController>().getDataItem2();
     super.initState();
   }
@@ -129,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 FutureBuilder(
-                    future: productController.getDataItem(),
+                    future: productController.getDataItem2(),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
@@ -201,7 +201,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         child: Text(
                                                           productController
                                                               .item[index]
-                                                              .productDescription!,
+                                                              .productName!,
                                                           maxLines: 2,
                                                           overflow: TextOverflow
                                                               .ellipsis,
@@ -215,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   Text(
                                                     productController
                                                         .item[index]
-                                                        .productPrice
+                                                        .productPrice!
                                                         .toString(),
                                                     style: TextStyle(
                                                       fontWeight:

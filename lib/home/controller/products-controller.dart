@@ -9,8 +9,8 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
 class ProductController extends GetxController {
+  // List<Product> item = [];
   List<Product> item = [];
-  List<Products> item2 = [];
   List<Categories> category = [
     Categories(
       categoryName: "Bag",
@@ -27,50 +27,49 @@ class ProductController extends GetxController {
   ];
   @override
   void onInit() {
-    getDataItem();
+    getDataItem2();
     super.onInit();
   }
 
-  Future<List<Product>> getDataItem() async {
+  // Future<List<Product>> getDataItem() async {
+  //   try {
+  //     var response = await http.get(
+  //       Uri.parse(Api.getAllProducts),
+  //       // Uri.parse(Api.getItemApi),
+  //       // headers: {'Content-Type': 'application/json; charset=utf-8'},
+  //     );
+  //     if (response.statusCode == 200) {
+  //       print("Thanh cong");
+  //       item = ProductsFromJson(response.body);
+  //       // item = ProducstFromJson(response.body);
+
+  //       return item;
+  //     } else {
+  //       print(response.statusCode);
+  //       return [];
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return [];
+  //   }
+  // }
+
+  Future<List<Product>> getDataItem2() async {
     try {
       var response = await http.get(
         Uri.parse(Api.getAllProducts),
-        //   Uri.parse(ApiFake.getItemApi)
-        //headers: {'Content-Type': 'application/json'},
+        headers: {
+          'Accept': 'application/json; charset=utf-8',
+        },
       );
       if (response.statusCode == 200) {
-        print("Thanh cong");
-        item = ProductsFromJson(response.body);
-        // item = ProducstFromJson(response.body);
-
-        return item;
-      } else {
-        print(response.statusCode);
-        return [];
-      }
-    } catch (e) {
-      print(e.toString());
-      return [];
-    }
-  }
-
-  Future<List<Products>> getDataItem2() async {
-    try {
-      var response = await http.get(Uri.parse(ApiFake.getItemApi)
-          //headers: {'Content-Type': 'application/json'},
-          );
-      if (response.statusCode == 200) {
-        print("Thanh cong");
-        final encoding = response.headers['content-encoding'];
-
-        // Giải mã dữ liệu dựa trên encoding
-        final decodedData = encoding == 'gzip'
-            ? utf8.decode(gzip.decode(response.bodyBytes))
-            : utf8.decode(response.bodyBytes);
+        print("Thành công");
+        final decodedData = utf8.decode(response.bodyBytes);
+        // final decodedData = response.body;
         print(decodedData);
-        item2 = ProducstFromJson(response.body);
-        print(item2[1].image);
-        return item2;
+        item = ProductsFromJson(decodedData);
+        print(item[1].productImage);
+        return item;
       } else {
         print(response.statusCode);
         return [];
