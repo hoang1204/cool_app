@@ -2,20 +2,19 @@
 
 import 'package:brandshop/auth/widgets/input-password.dart';
 import 'package:brandshop/auth/widgets/input-phone.dart';
-import 'package:brandshop/routes/routes.dart';
 import 'package:brandshop/utils/app-color.dart';
 import 'package:brandshop/utils/text-widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpScreenState extends State<SignUpScreen> {
   var formKey = GlobalKey<FormState>();
   var phoneController = TextEditingController();
   var passwordController = TextEditingController();
@@ -39,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 child: Column(
                   children: [
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 30),
                     Image.asset('assets/images/logo.png',
                         width: 200, height: 200),
                     Padding(
@@ -48,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           const SizedBox(height: 30),
                           TextWidget(
-                            text: 'ĐĂNG NHẬP TÀI KHOẢN',
+                            text: 'ĐĂNG KÝ TÀI KHOẢN',
                             size: 30,
                             color: AppColor.mainColor,
                             fontWeight: FontWeight.bold,
@@ -105,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Get.toNamed(Routes.signUp);
+                                    // Get.toNamed(Routes.phoneValidate);
                                   },
                                   child: const Text(
                                     'Sign Up',
