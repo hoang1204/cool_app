@@ -3,7 +3,6 @@ import 'package:brandshop/cart/widgets/empty_cart_view.dart';
 import 'package:brandshop/utils/text-widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -85,7 +84,7 @@ class _CartScreenState extends State<CartScreen> {
                                                           .product!
                                                           .productName ??
                                                       "",
-                                                  maxLines: 3,
+                                                  maxLines: 1,
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   style: TextStyle(

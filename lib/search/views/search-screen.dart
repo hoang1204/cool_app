@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
+import '../../cart/controller/cart_controller.dart';
+
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 
@@ -147,7 +149,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                           height: 10,
                                         ),
                                         InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Get.find<CartController>()
+                                                .addProductToCart(
+                                                    searchController
+                                                        .searchDatalist[index]);
+                                            Get.snackbar("SUCCESS",
+                                                "Your cart was added product");
+                                            searchController.update();
+                                          },
                                           child: Container(
                                               height: 40,
                                               width: 60,
