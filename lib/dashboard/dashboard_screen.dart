@@ -44,7 +44,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ),
         title: 'Cart',
         activeColorPrimary: Color.fromARGB(255, 255, 255, 255),
-        inactiveColorPrimary: AppColor.iconColor,
+        inactiveColorPrimary: AppColor.mainColor,
       ),
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.card_travel_rounded),

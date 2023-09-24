@@ -1,5 +1,7 @@
 import 'package:brandshop/auth/views/login-screens.dart';
 import 'package:brandshop/auth/views/sign-up-screen.dart';
+import 'package:brandshop/cart/bindings/cart_bindings.dart';
+import 'package:brandshop/cart/views/cart_screen.dart';
 import 'package:brandshop/dashboard/dashboard_screen.dart';
 import 'package:brandshop/home/bindings/product_binding.dart';
 import 'package:brandshop/home/views/home-screen.dart';
@@ -13,6 +15,7 @@ class Routes {
   static String signUp = '/signUp';
   static String dashboard = '/dashboard';
   static String search = '/search';
+  static String cart = '/cart';
 }
 
 final getPage = [
@@ -22,5 +25,8 @@ final getPage = [
   GetPage(name: Routes.signUp, page: () => SignUpScreen()),
   GetPage(name: Routes.dashboard, page: () => DashBoardScreen()),
   GetPage(
-      name: Routes.search, page: () => SearchScreen(), binding: SearchBinding())
+      name: Routes.search,
+      page: () => SearchScreen(),
+      binding: SearchBinding()),
+  GetPage(name: Routes.cart, page: () => CartScreen(), binding: CartBinding()),
 ];

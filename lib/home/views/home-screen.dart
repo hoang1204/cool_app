@@ -1,3 +1,4 @@
+import 'package:brandshop/cart/controller/cart_controller.dart';
 import 'package:brandshop/home/controller/products-controller.dart';
 import 'package:brandshop/items/views/item-views.dart';
 import 'package:brandshop/routes/routes.dart';
@@ -261,7 +262,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     height: 10,
                                                   ),
                                                   InkWell(
-                                                    onTap: () {},
+                                                    onTap: () {
+                                                      Get.find<CartController>()
+                                                          .addProductToCart(
+                                                              productController
+                                                                  .item[index]);
+                                                      Get.snackbar("SUCCESS",
+                                                          "Your cart was added product");
+                                                      productController
+                                                          .update();
+                                                    },
                                                     child: Container(
                                                         height: 40,
                                                         width: 60,

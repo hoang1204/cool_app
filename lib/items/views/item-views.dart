@@ -1,3 +1,4 @@
+import 'package:brandshop/cart/controller/cart_controller.dart';
 import 'package:brandshop/home/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -40,7 +41,7 @@ class _ItemViewState extends State<ItemView> {
                     maxLines: 8,
                     overflow: TextOverflow.ellipsis,
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -58,6 +59,8 @@ class _ItemViewState extends State<ItemView> {
           // Nút thêm vào giỏ hàng
           ElevatedButton(
             onPressed: () {
+              Get.find<CartController>().addProductToCart(widget.item);
+              Get.snackbar("SUCCESS", "Your cart was added product");
               // Xử lý khi người dùng nhấn nút thêm vào giỏ hàng
               Get.back(); // Đóng Bottom Sheet
               // Thêm sản phẩm vào giỏ hàng ở đây
