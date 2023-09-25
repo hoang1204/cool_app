@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
     Timer(
       const Duration(seconds: 3),
       () {
-        Get.offNamed(Routes.dashboard);
+        Get.offNamed(Routes.login);
       },
     );
     super.initState();

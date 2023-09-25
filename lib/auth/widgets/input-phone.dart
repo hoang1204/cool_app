@@ -14,12 +14,6 @@ class InputPhone extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      validator: (value) {
-        if (value!.isEmpty || value.length < 10) {
-          return 'Phone invalidate';
-        }
-        return null;
-      },
       decoration: InputDecoration(
         hintText: hint,
         labelStyle: const TextStyle(

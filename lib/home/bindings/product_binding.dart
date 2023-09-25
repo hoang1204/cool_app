@@ -1,3 +1,4 @@
+import 'package:brandshop/auth/controller/authen_controller.dart';
 import 'package:brandshop/home/controller/products-controller.dart';
 import 'package:get/get.dart';
 
@@ -8,5 +9,6 @@ class ProductBinding extends Bindings {
   void dependencies() {
     Get.put(ProductController());
     Get.put(CartController());
+    Get.put(AuthController());
   }
 }

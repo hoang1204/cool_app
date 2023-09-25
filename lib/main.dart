@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
       initialBinding: ProductBinding(),
       getPages: getPage,
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         // Đặt font mặc định cho ứng dụng
         colorScheme: ColorScheme.fromSeed(seedColor: AppColor.mainColor),

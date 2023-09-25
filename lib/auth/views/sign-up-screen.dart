@@ -1,7 +1,10 @@
 // ignore_for_file: file_names
 
+import 'package:brandshop/auth/controller/authen_controller.dart';
+import 'package:brandshop/auth/models/auth_signup.dart';
 import 'package:brandshop/auth/widgets/input-password.dart';
 import 'package:brandshop/auth/widgets/input-phone.dart';
+import 'package:brandshop/routes/routes.dart';
 import 'package:brandshop/utils/app-color.dart';
 import 'package:brandshop/utils/text-widget.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +19,19 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   var formKey = GlobalKey<FormState>();
-  var phoneController = TextEditingController();
+  var gmailController = TextEditingController();
   var passwordController = TextEditingController();
+  var rePasswordController = TextEditingController();
+  var nameController = TextEditingController();
+
   var isObsecured = true.obs;
 
   @override
   void dispose() {
-    phoneController.dispose();
+    gmailController.dispose();
     passwordController.dispose();
+    nameController.dispose();
+    rePasswordController.dispose();
     super.dispose();
   }
 
@@ -66,13 +74,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             //const TitleInput(textInput: 'Phone Number'),
                             const SizedBox(height: 10),
                             InputPhone(
-                                controller: phoneController,
-                                hint: 'Enter your phone number'),
+                                controller: nameController,
+                                hint: 'Enter your name'),
+                            const SizedBox(height: 18),
+                            //const TitleInput(textInput: 'Password '),
+                            const SizedBox(height: 10),
+                            InputPhone(
+                                controller: gmailController,
+                                hint: 'Enter your email'),
                             const SizedBox(height: 18),
                             //const TitleInput(textInput: 'Password '),
                             const SizedBox(height: 10),
                             InputPassword(
                               passwordController: passwordController,
+                              isObsecured: isObsecured,
+                            ),
+                            const SizedBox(height: 18),
+                            //const TitleInput(textInput: 'Password '),
+                            const SizedBox(height: 10),
+                            InputPassword(
+                              passwordController: rePasswordController,
                               isObsecured: isObsecured,
                             ),
                             const SizedBox(height: 36),
@@ -86,9 +107,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     borderRadius: BorderRadius.circular(5.5),
                                   ),
                                 ),
-                                onPressed: () async {},
+                                onPressed: () async {
+                                  {
+                                    AuthSignUp authTemp = AuthSignUp(
+                                        member_Name: nameController.text,
+                                        password: passwordController.text,
+                                        email: gmailController.text);
+                                    Get.find<AuthController>().signUp(authTemp);
+                                    Get.snackbar("Login", "Successful");
+                                    Get.offNamed(Routes.login);
+                                    // } else {
+                                    //   Get.snackbar("Login", "Unsuccessful");
+                                    //   gmailController.clear();
+                                    //   passwordController.clear();
+                                    //   nameController.clear();
+                                    //   rePasswordController.clear();
+                                  }
+                                },
                                 child: const Text(
-                                  'Login',
+                                  'Sign Up',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
@@ -99,15 +136,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Don\'t have account? ',
+                                  'You have account? ',
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    // Get.toNamed(Routes.phoneValidate);
+                                    Get.offNamed(Routes.login);
                                   },
                                   child: const Text(
-                                    'Sign Up',
+                                    'Login',
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize: 18,
@@ -121,18 +158,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    InkWell(
-                      onTap: () {
-                        //  Get.toNamed(Routes.resetPassword);
-                      },
-                      child: const Text(
-                        'Reset Password',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
                   ],
                 ),
               )

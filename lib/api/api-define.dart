@@ -6,4 +6,6 @@
 class Api {
   static const String url = "http://54.254.150.184:8080";
   static const String getAllProducts = "$url/api/Product/getAllProducts";
+  static const String login = "$url/api/public/login";
+  static const String signup = "$url/api/public/add";
 }
