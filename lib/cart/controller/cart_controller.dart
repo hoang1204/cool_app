@@ -1,11 +1,12 @@
 import 'package:brandshop/cart/models/cart-model.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../home/model/product.dart';
 
 class CartController extends GetxController {
   List<ProductCart> productCart = [];
-
+  final Future<SharedPreferences> prefs = SharedPreferences.getInstance();
   addProductToCart(Product product) {
     for (int i = 0; i < productCart.length; i++) {
       if (productCart[i].product!.productName == product.productName) {

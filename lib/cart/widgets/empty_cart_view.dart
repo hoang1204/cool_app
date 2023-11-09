@@ -15,10 +15,8 @@ class EmptyCartView extends GetView {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 32,
-              ),
-              Text("YOUR_CART_IS_EMPTY"),
+              Image.asset("assets/images/Empty_Cart.jpeg"),
+              Text("YOUR CART IS EMPTY"),
               SizedBox(
                 height: 16,
               ),
@@ -26,7 +24,7 @@ class EmptyCartView extends GetView {
                 height: 8,
               ),
               Text(
-                'LOOKS_LIKE_YOU_HAVENT_ADDED_ANYTHING',
+                'LOOKS LIKE YOU HAVENT ADDED ANYTHING',
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 style: TextStyle(

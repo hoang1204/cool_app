@@ -1,39 +1,28 @@
-// ignore_for_file: file_names
-
-import 'package:brandshop/auth/controller/authen_controller.dart';
 import 'package:brandshop/auth/widgets/input-password.dart';
 import 'package:brandshop/auth/widgets/input-phone.dart';
-import 'package:brandshop/routes/routes.dart';
+import 'package:brandshop/home/widgets/custom_snackbar.dart';
+import 'package:brandshop/profile/controller/profile_controller.dart';
 import 'package:brandshop/utils/app-color.dart';
 import 'package:brandshop/utils/text-widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class ChangePassword extends StatefulWidget {
+  const ChangePassword({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<ChangePassword> createState() => _ChangePasswordState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _ChangePasswordState extends State<ChangePassword> {
   var formKey = GlobalKey<FormState>();
-  var phoneController = TextEditingController();
   var passwordController = TextEditingController();
-  var isObsecured = true.obs;
-
-  @override
-  void dispose() {
-    phoneController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  var newPassController = TextEditingController();
+  var newRePassController = TextEditingController();
+  var isObsecured1 = true.obs;
+  var isObsecured2 = true.obs;
+  var isObsecured3 = true.obs;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,17 +34,19 @@ class _LoginScreenState extends State<LoginScreen> {
                 width: MediaQuery.sizeOf(context).width,
                 child: Column(
                   children: [
-                    const SizedBox(height: 100),
-                    Image.asset('assets/images/logo.png',
-                        width: 200, height: 200),
+                    const SizedBox(height: 30),
+                    Image.asset(
+                      'assets/images/logo.png',
+                      width: 200,
+                    ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         children: [
                           const SizedBox(height: 30),
                           TextWidget(
-                            text: 'ĐĂNG NHẬP TÀI KHOẢN',
-                            size: 30,
+                            text: 'ĐỔI MẬT KHẨU',
+                            size: 26,
                             color: AppColor.mainColor,
                             fontWeight: FontWeight.bold,
                           ),
@@ -72,16 +63,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             //const TitleInput(textInput: 'Phone Number'),
                             const SizedBox(height: 10),
-                            InputPhone(
-                                controller: phoneController,
-                                hint: 'Enter your phone number'),
-                            const SizedBox(height: 18),
+
                             //const TitleInput(textInput: 'Password '),
                             const SizedBox(height: 10),
-                            InputPassword(
-                              passwordController: passwordController,
-                              isObsecured: isObsecured,
+
+                            TextWidget(
+                              text: " New password",
+                              size: 18,
                             ),
+                            InputPassword(
+                                passwordController: newPassController,
+                                isObsecured: isObsecured2),
+                            const SizedBox(height: 36),
+                            TextWidget(
+                              text: " ReNew password",
+                              size: 18,
+                            ),
+                            InputPassword(
+                                passwordController: newRePassController,
+                                isObsecured: isObsecured3),
                             const SizedBox(height: 36),
                             SizedBox(
                               width: double.infinity,
@@ -94,13 +94,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 onPressed: () async {
-                                  print("?");
-                                  Get.find<AuthController>().loginUserPass(
-                                      phoneController.text,
-                                      passwordController.text);
+                                  if (newPassController.text ==
+                                      newRePassController.text) {
+                                    Get.find<ProfileController>()
+                                        .changePassword(
+                                            newPassController.text,
+                                            Get.find<ProfileController>()
+                                                    .authModel!
+                                                    .member_id ??
+                                                -1);
+                                  } else {
+                                    customSnackbar("Alert",
+                                        "Change pass unsuccesful", Colors.red);
+                                  }
                                 },
                                 child: const Text(
-                                  'Login',
+                                  'Update',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 18),
                                 ),
@@ -111,15 +120,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  'Don\'t have account? ',
+                                  'Back to profile? ',
                                   style: TextStyle(fontSize: 18),
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Get.toNamed(Routes.signUp);
+                                    Get.back();
                                   },
                                   child: const Text(
-                                    'Sign Up',
+                                    'Back',
                                     style: TextStyle(
                                         color: Colors.red,
                                         fontSize: 18,
@@ -133,18 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    InkWell(
-                      onTap: () {
-                        //  Get.toNamed(Routes.resetPassword);
-                      },
-                      child: const Text(
-                        'Reset Password',
-                        style: TextStyle(
-                            color: Colors.red,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
                   ],
                 ),
               )

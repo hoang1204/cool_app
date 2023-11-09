@@ -1,7 +1,12 @@
 import 'package:brandshop/account/widgets/expansion-widget.dart';
+import 'package:brandshop/auth/models/auth_model.dart';
+import 'package:brandshop/profile/controller/profile_controller.dart';
+import 'package:brandshop/routes/routes.dart';
 import 'package:brandshop/utils/app-color.dart';
 import 'package:brandshop/utils/text-widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({super.key});
@@ -11,6 +16,8 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  AuthModel? authModel = Get.find<ProfileController>().authModel;
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -26,15 +33,15 @@ class _AccountScreenState extends State<AccountScreen> {
                           begin: Alignment.topRight,
                           end: Alignment.bottomLeft,
                           colors: [
-                            Color.fromARGB(255, 56, 62, 59),
-                            Color.fromARGB(255, 56, 62, 59),
-                            Color.fromARGB(255, 81, 93, 87),
-                            Color.fromARGB(255, 70, 71, 71),
-                            Color.fromARGB(255, 60, 72, 66),
-                            Color.fromARGB(255, 87, 95, 92),
-                            Color.fromARGB(255, 90, 92, 90),
-                            Color.fromARGB(255, 86, 88, 87),
-                            Color.fromARGB(255, 56, 62, 59),
+                            Color.fromARGB(255, 112, 114, 113),
+                            Color.fromARGB(255, 150, 152, 151),
+                            Color.fromARGB(255, 155, 157, 156),
+                            Color.fromARGB(255, 132, 134, 134),
+                            Color.fromARGB(255, 149, 159, 154),
+                            Color.fromARGB(255, 119, 119, 119),
+                            Color.fromARGB(255, 117, 118, 117),
+                            Color.fromARGB(255, 133, 133, 133),
+                            Color.fromARGB(255, 102, 102, 102),
                           ],
                         ),
                         borderRadius: BorderRadius.only(
@@ -51,24 +58,24 @@ class _AccountScreenState extends State<AccountScreen> {
                 child: Center(
                   child: Container(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topRight,
-                          end: Alignment.bottomLeft,
-                          colors: [
-                            Color.fromARGB(255, 114, 116, 114),
-                            Color.fromARGB(255, 91, 98, 91),
-                            Color.fromARGB(255, 92, 95, 92),
-                            Color.fromARGB(255, 103, 105, 103),
-                            Color.fromARGB(255, 85, 93, 85),
-                            Color.fromARGB(255, 110, 115, 110),
-                            Color.fromARGB(255, 104, 105, 104),
-                          ],
-                        ),
-                        // border: Border.all(color: Colors.white),
+                        // gradient: LinearGradient(
+                        //   begin: Alignment.topRight,
+                        //   end: Alignment.bottomLeft,
+                        //   colors: [
+                        //     // Color.fromARGB(255, 114, 116, 114),
+                        //     // Color.fromARGB(255, 91, 98, 91),
+                        //     // Color.fromARGB(255, 92, 95, 92),
+                        //     // Color.fromARGB(255, 103, 105, 103),
+                        //     // Color.fromARGB(255, 85, 93, 85),
+                        //     // Color.fromARGB(255, 110, 115, 110),
+                        //     // Color.fromARGB(255, 104, 105, 104),
+                        //   ],
+                        // ),
+                        // // border: Border.all(color: Colors.white),
                         borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        )),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    )),
                     width: MediaQuery.sizeOf(context).width,
                     height: MediaQuery.sizeOf(context).height / 10,
                   ),
@@ -118,7 +125,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: TextWidget(
-                              text: "Diệu My",
+                              text: authModel?.member_name ?? "Username",
                               size: 25,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -127,7 +134,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: TextWidget(
-                              text: "0989565688",
+                              text: authModel?.phone ?? "0123456789",
                               size: 20,
                               color: Colors.white,
                             ),
@@ -135,7 +142,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           Padding(
                             padding: const EdgeInsets.all(5.0),
                             child: TextWidget(
-                              text: "dieumy@gmail.com",
+                              text: authModel?.email ?? "abc@gmail.com",
                               size: 20,
                               color: Colors.white,
                             ),
@@ -195,7 +202,15 @@ class _AccountScreenState extends State<AccountScreen> {
                         padding: EdgeInsets.only(
                             left: 30, right: 30, top: 5, bottom: 5),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            final prefs = await _prefs;
+                            bool? checkLogin = prefs.getBool('isLogined');
+                            if (checkLogin ?? false == true) {
+                              Get.toNamed(Routes.updateProfile);
+                            } else {
+                              Get.toNamed(Routes.login);
+                            }
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -224,7 +239,15 @@ class _AccountScreenState extends State<AccountScreen> {
                         padding: EdgeInsets.only(
                             left: 30, right: 30, top: 5, bottom: 5),
                         child: InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            final prefs = await _prefs;
+                            bool? checkLogin = prefs.getBool('isLogined');
+                            if (checkLogin ?? false == true) {
+                              Get.toNamed(Routes.changePassword);
+                            } else {
+                              Get.toNamed(Routes.login);
+                            }
+                          },
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
@@ -235,12 +258,12 @@ class _AccountScreenState extends State<AccountScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(
-                                    Icons.repartition,
+                                    Icons.change_circle,
                                     color: Colors.white,
                                   ),
                                 ),
                                 TextWidget(
-                                  text: "Sửa thông tin",
+                                  text: "Đổi mật khẩu",
                                   size: 17,
                                   color: Colors.white,
                                 ),
@@ -248,7 +271,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             ),
                           ),
                         ),
-                      )
+                      ),
                     ],
                     title: "Cá nhân",
                     icon: Icon(

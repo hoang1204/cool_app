@@ -110,18 +110,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 onPressed: () async {
                                   {
                                     AuthSignUp authTemp = AuthSignUp(
-                                        member_Name: nameController.text,
+                                        member_name: nameController.text,
                                         password: passwordController.text,
                                         email: gmailController.text);
                                     Get.find<AuthController>().signUp(authTemp);
                                     Get.snackbar("Login", "Successful");
                                     Get.offNamed(Routes.login);
-                                    // } else {
-                                    //   Get.snackbar("Login", "Unsuccessful");
-                                    //   gmailController.clear();
-                                    //   passwordController.clear();
-                                    //   nameController.clear();
-                                    //   rePasswordController.clear();
                                   }
                                 },
                                 child: const Text(

@@ -4,9 +4,14 @@ import 'package:brandshop/splash/views/splash_screen.dart';
 import 'package:brandshop/utils/app-color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferences prefs = await _prefs;
+  prefs.setBool('isLogined', false);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
