@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:brandshop/auth/views/login-screens.dart';
-import 'package:brandshop/dashboard/dashboard_screen.dart';
-import 'package:brandshop/home/controller/products-controller.dart';
 import 'package:brandshop/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

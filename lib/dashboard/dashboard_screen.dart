@@ -16,7 +16,7 @@ class DashBoardScreen extends StatefulWidget {
 class _DashBoardScreenState extends State<DashBoardScreen> {
   final List<Widget> _screens = const [
     HomeScreen(),
-    CategoriesScreen(),
+    NotificationScreen(),
     CartScreen(),
     OffersScreen(),
     AccountScreen(),
@@ -31,8 +31,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         inactiveColorPrimary: AppColor.mainColor,
       ),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.monetization_on),
-        title: 'Categories',
+        icon: const Icon(Icons.notifications),
+        title: 'Notification',
         activeColorPrimary: Colors.green,
         inactiveColorPrimary: AppColor.mainColor,
       ),
